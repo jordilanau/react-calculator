@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react';
 
 /**
- * Custom props
+ * Custom Key props
  */
-type CustomButtonProps = {
+export type KeyProps = {
   /**
    * The value of the given button
    */
@@ -18,10 +18,9 @@ type CustomButtonProps = {
 /**
  * Props to be omitted to remove duplicates
  */
-type PropsToOmit = keyof CustomButtonProps | 'className' | 'children';
+type PropsToOmit = keyof KeyProps | 'className' | 'children';
 
 /**
  * The ButtonProps
  */
-export type ButtonProps<T extends React.ElementType = 'button'> = CustomButtonProps &
-  Omit<ComponentProps<T>, PropsToOmit>;
+export type ButtonProps<T extends React.ElementType = 'button'> = KeyProps & Omit<ComponentProps<T>, PropsToOmit>;
