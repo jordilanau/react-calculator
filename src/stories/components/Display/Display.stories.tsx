@@ -8,7 +8,7 @@ export default {
 } satisfies Meta<DisplayProps>;
 
 const Template: StoryFn<DisplayProps> = (args) => (
-  <div className='grid grid-cols-12 max-w-xs'>
+  <div className='grid max-w-[250px]'>
     <Display {...args} />
   </div>
 );
