@@ -1,9 +1,10 @@
-import { Title } from './components/Title/Title';
+import { Calculator } from './components/Calculator/Calculator';
 
 function App() {
   return (
-    <div>
-      <Title />
+    <div className='p-2'>
+      <h2 className='font-bold text-lg'>React Calculator</h2>
+      <Calculator />
     </div>
   );
 }

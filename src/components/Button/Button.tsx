@@ -14,7 +14,7 @@ export const Button = ({ value, span }: ButtonProps) => {
   return (
     <button
       type='button'
-      className={`${spanValues[span]} bg-blue-200 px-2 py-3 bg-opacity-50 hover:bg-blue-50`}
+      className={`${spanValues[span]} !bg-blue-200 px-2 py-3 bg-opacity-50 hover:!bg-blue-50`}
       value={value}
       onClick={onClick}>
       {value}

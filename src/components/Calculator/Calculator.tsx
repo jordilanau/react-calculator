@@ -4,7 +4,7 @@ import { KeyGrid } from '../KeyGrid/KeyGrid';
 
 export const Calculator = () => {
   return (
-    <div className='grid max-w-[250px] gap-1'>
+    <div className='grid gap-1 max-w-xs bg-white p-3 border-4 border-black'>
       <Display previous='' current='' />
       <KeyGrid keys={keys} />
     </div>
