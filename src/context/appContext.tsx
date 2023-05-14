@@ -14,6 +14,10 @@ const AppProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: ACTIONS.ADD_DIGIT, payload: digit });
   };
 
+  const deleteDigit = () => {
+    dispatch({ type: ACTIONS.DELETE_DIGIT });
+  };
+
   const chooseOperation = (operation: string) => {
     dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: operation });
   };
@@ -27,8 +31,9 @@ const AppProvider = ({ children }: PropsWithChildren) => {
     currentOperand: '0',
     operation: '',
     addDigit: addDigit,
+    deleteDigit: deleteDigit,
     chooseOperation: chooseOperation,
-    clear,
+    clear: clear,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

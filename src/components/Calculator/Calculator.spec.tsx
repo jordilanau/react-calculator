@@ -122,4 +122,72 @@ describe('Calculator', () => {
     result = screen.getByTestId('currentOperand');
     expect(result.innerHTML).toBe('0');
   });
+
+  it('removes the last digit when DEL is pressed', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const one = screen.getByRole('button', { name: '1' });
+    const two = screen.getByRole('button', { name: '2' });
+    const three = screen.getByRole('button', { name: '3' });
+    const DEL = screen.getByRole('button', { name: 'DEL' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(one);
+    await user.click(two);
+    await user.click(three);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('123');
+
+    await user.click(DEL);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('12');
+
+    await user.click(DEL);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('1');
+  });
+
+  it('the current operand renders 0 when length is 1 and DEL is pressed', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const three = screen.getByRole('button', { name: '3' });
+    const DEL = screen.getByRole('button', { name: 'DEL' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(three);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('3');
+
+    await user.click(DEL);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(DEL);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('0');
+  });
 });

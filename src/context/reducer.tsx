@@ -20,7 +20,10 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       return { ...state, currentOperand: state.currentOperand + action.payload };
     }
     case ACTIONS.DELETE_DIGIT: {
-      return { ...state };
+      if (state.currentOperand.length > 1) {
+        return { ...state, currentOperand: state.currentOperand.slice(0, -1) };
+      }
+      return { ...state, currentOperand: '0' };
     }
     case ACTIONS.CLEAR: {
       return { ...state, previousOperand: '', currentOperand: '0', operation: '' };

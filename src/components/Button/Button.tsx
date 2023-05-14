@@ -3,7 +3,7 @@ import { AppContext } from '../../context/appContext';
 import { ButtonProps } from './Button.types';
 
 export const Button = ({ value, span, type }: ButtonProps) => {
-  const { addDigit, chooseOperation, clear } = useContext(AppContext);
+  const { addDigit, chooseOperation, clear, deleteDigit } = useContext(AppContext);
 
   const spanValues = {
     1: 'col-span-1',
@@ -21,6 +21,9 @@ export const Button = ({ value, span, type }: ButtonProps) => {
         switch (value) {
           case 'AC':
             clear();
+            break;
+          case 'DEL':
+            deleteDigit();
             break;
           default:
             chooseOperation(value);
