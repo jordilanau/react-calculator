@@ -3,7 +3,7 @@ import { AppContext } from '../../context/appContext';
 import { ButtonProps } from './Button.types';
 
 export const Button = ({ value, span, type }: ButtonProps) => {
-  const { addDigit, chooseOperation, clear, deleteDigit } = useContext(AppContext);
+  const { addDigit, chooseOperation, clear, deleteDigit, evaluate } = useContext(AppContext);
 
   const spanValues = {
     1: 'col-span-1',
@@ -24,6 +24,9 @@ export const Button = ({ value, span, type }: ButtonProps) => {
             break;
           case 'DEL':
             deleteDigit();
+            break;
+          case '=':
+            evaluate();
             break;
           default:
             chooseOperation(value);

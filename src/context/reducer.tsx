@@ -29,15 +29,76 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       return { ...state, previousOperand: '', currentOperand: '0', operation: '' };
     }
     case ACTIONS.CHOOSE_OPERATION: {
-      return { ...state };
+      if (!state.currentOperand && !state.previousOperand) {
+        return { ...state };
+      }
+      if (state.currentOperand === '0') {
+        return {
+          ...state,
+          operation: action.payload || '',
+        };
+      }
+      if (!state.previousOperand) {
+        return {
+          ...state,
+          operation: action.payload || '',
+          previousOperand: state.currentOperand,
+          currentOperand: '0',
+        };
+      }
+      return {
+        ...state,
+        previousOperand: evaluate(state),
+        currentOperand: '0',
+        operation: action.payload || '',
+      };
     }
     case ACTIONS.EVALUATE: {
-      return { ...state };
+      if (!state.currentOperand || !state.previousOperand || !state.operation) {
+        return { ...state };
+      }
+      return {
+        ...state,
+        previousOperand: '',
+        operation: '',
+        currentOperand: evaluate(state),
+      };
     }
     default: {
       return { ...state };
     }
   }
 };
+
+function evaluate({
+  currentOperand,
+  previousOperand,
+  operation,
+}: Pick<AppStateType, 'previousOperand' | 'currentOperand' | 'operation'>) {
+  const previous = parseFloat(previousOperand);
+  const current = parseFloat(currentOperand);
+
+  if (isNaN(previous) || isNaN(current)) {
+    return '';
+  }
+
+  switch (operation) {
+    case '+': {
+      return (previous + current).toString();
+    }
+    case '-': {
+      return (previous - current).toString();
+    }
+    case '*': {
+      return (previous * current).toString();
+    }
+    case '/': {
+      return (previous / current).toString();
+    }
+    default: {
+      return '';
+    }
+  }
+}
 
 export default reducer;

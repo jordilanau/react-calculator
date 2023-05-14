@@ -190,4 +190,198 @@ describe('Calculator', () => {
     result = screen.getByTestId('currentOperand');
     expect(result.innerHTML).toBe('0');
   });
+
+  it('evaluates additions correctly', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const one = screen.getByRole('button', { name: '1' });
+    const add = screen.getByRole('button', { name: '+' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(one);
+    await user.click(add);
+    await user.click(one);
+
+    let previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('1 +');
+    expect(result.innerHTML).toBe('1');
+
+    await user.click(equal);
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('');
+    expect(result.innerHTML).toBe('2');
+  });
+
+  it('evaluates subtractions correctly', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const one = screen.getByRole('button', { name: '1' });
+    const sub = screen.getByRole('button', { name: '-' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(one);
+    await user.click(sub);
+    await user.click(one);
+
+    let previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('1 -');
+    expect(result.innerHTML).toBe('1');
+
+    await user.click(equal);
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('');
+    expect(result.innerHTML).toBe('0');
+  });
+
+  it('evaluates multiplications correctly', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const two = screen.getByRole('button', { name: '2' });
+    const mult = screen.getByRole('button', { name: '*' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(two);
+    await user.click(mult);
+    await user.click(two);
+
+    let previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('2 *');
+    expect(result.innerHTML).toBe('2');
+
+    await user.click(equal);
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('');
+    expect(result.innerHTML).toBe('4');
+  });
+
+  it('evaluates divisions correctly', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const two = screen.getByRole('button', { name: '2' });
+    const div = screen.getByRole('button', { name: '/' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(two);
+    await user.click(div);
+    await user.click(two);
+
+    let previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('2 /');
+    expect(result.innerHTML).toBe('2');
+
+    await user.click(equal);
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('');
+    expect(result.innerHTML).toBe('1');
+  });
+
+  it('choose operation chains operations correctly', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const one = screen.getByRole('button', { name: '1' });
+    const two = screen.getByRole('button', { name: '2' });
+    const three = screen.getByRole('button', { name: '3' });
+    const add = screen.getByRole('button', { name: '+' });
+    const sub = screen.getByRole('button', { name: '-' });
+    const mult = screen.getByRole('button', { name: '*' });
+    const div = screen.getByRole('button', { name: '/' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(two);
+    await user.click(add);
+    await user.click(two);
+
+    let previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('2 +');
+    expect(result.innerHTML).toBe('2');
+
+    await user.click(sub);
+    await user.click(three);
+
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('4 -');
+    expect(result.innerHTML).toBe('3');
+
+    await user.click(mult);
+    await user.click(three);
+
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('1 *');
+    expect(result.innerHTML).toBe('3');
+
+    await user.click(div);
+    await user.click(one);
+
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('3 /');
+    expect(result.innerHTML).toBe('1');
+
+    await user.click(equal);
+    previous = screen.getByTestId('previousOperand');
+    result = screen.getByTestId('currentOperand');
+    expect(previous.innerHTML).toBe('');
+    expect(result.innerHTML).toBe('3');
+  });
 });

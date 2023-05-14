@@ -8,6 +8,7 @@ export type AppStateType = {
   deleteDigit: () => void;
   chooseOperation: (operation: string) => void;
   clear: () => void;
+  evaluate: () => void;
 };
 
 export type AppProviderTypeProps = PropsWithChildren;

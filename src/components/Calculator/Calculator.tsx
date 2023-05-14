@@ -6,10 +6,11 @@ import { KeyGrid } from '../KeyGrid/KeyGrid';
 
 export const Calculator = () => {
   const { currentOperand, previousOperand, operation } = useContext(AppContext);
+  const previous = (previousOperand + ' ' + operation).trim();
 
   return (
     <div className='grid gap-1 max-w-xs bg-white p-3 border-4 border-black'>
-      <Display previous={`${previousOperand} ${operation}`} current={currentOperand} />
+      <Display previous={previous} current={currentOperand} />
       <KeyGrid keys={keys} />
     </div>
   );
