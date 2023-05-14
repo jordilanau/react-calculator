@@ -1,14 +1,21 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useContext } from 'react';
+import { AppContext } from '../../context/appContext';
 import { ButtonProps } from './Button.types';
 
-export const Button = ({ value, span }: ButtonProps) => {
+export const Button = ({ value, span, type }: ButtonProps) => {
+  const { addDigit } = useContext(AppContext);
+
   const spanValues = {
     1: 'col-span-1',
     2: 'col-span-2',
   };
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.value);
+    switch (type) {
+      case 'digit':
+        addDigit(event.currentTarget.value);
+        break;
+    }
   };
 
   return (
