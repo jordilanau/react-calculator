@@ -384,4 +384,26 @@ describe('Calculator', () => {
     expect(previous.innerHTML).toBe('');
     expect(result.innerHTML).toBe('3');
   });
+
+  it('does not evaluate a value when no operation is selected', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const two = screen.getByRole('button', { name: '2' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    await user.click(two);
+    await user.click(equal);
+
+    const result = screen.getByTestId('currentOperand');
+    const previous = screen.getByTestId('previousOperand');
+
+    expect(result.innerHTML).toBe('2');
+    expect(previous.innerHTML).toBe('');
+  });
 });

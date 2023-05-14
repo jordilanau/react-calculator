@@ -29,15 +29,6 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       return { ...state, previousOperand: '', currentOperand: '0', operation: '' };
     }
     case ACTIONS.CHOOSE_OPERATION: {
-      if (!state.currentOperand && !state.previousOperand) {
-        return { ...state };
-      }
-      if (state.currentOperand === '0') {
-        return {
-          ...state,
-          operation: action.payload || '',
-        };
-      }
       if (!state.previousOperand) {
         return {
           ...state,
@@ -77,10 +68,6 @@ function evaluate({
 }: Pick<AppStateType, 'previousOperand' | 'currentOperand' | 'operation'>) {
   const previous = parseFloat(previousOperand);
   const current = parseFloat(currentOperand);
-
-  if (isNaN(previous) || isNaN(current)) {
-    return '';
-  }
 
   switch (operation) {
     case '+': {
