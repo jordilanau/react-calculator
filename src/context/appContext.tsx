@@ -14,16 +14,26 @@ const AppProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: ACTIONS.ADD_DIGIT, payload: digit });
   };
 
+  const chooseOperation = (operation: string) => {
+    dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: operation });
+  };
+
+  const clear = () => {
+    dispatch({ type: ACTIONS.CLEAR });
+  };
+
   const initialState: AppStateType = {
     previousOperand: '',
     currentOperand: '0',
     operation: '',
     addDigit: addDigit,
+    chooseOperation: chooseOperation,
+    clear,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return <AppContext.Provider value={{ ...state, addDigit }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ ...state, addDigit, chooseOperation, clear }}>{children}</AppContext.Provider>;
 };
 
 export { AppProvider, AppContext };

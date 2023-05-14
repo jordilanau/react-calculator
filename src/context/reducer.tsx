@@ -8,11 +8,14 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       if (state.currentOperand === '0' && action.payload === '0') {
         return { ...state };
       }
+      if (state.currentOperand.includes('.') && action.payload === '.') {
+        return { ...state };
+      }
       if (state.currentOperand === '0' && action.payload === '.') {
         return { ...state, currentOperand: '0' + action.payload };
       }
       if (state.currentOperand === '0') {
-        return { ...state, currentOperand: action.payload };
+        return { ...state, currentOperand: '' + action.payload };
       }
       return { ...state, currentOperand: state.currentOperand + action.payload };
     }
@@ -20,7 +23,7 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       return { ...state };
     }
     case ACTIONS.CLEAR: {
-      return { ...state };
+      return { ...state, previousOperand: '', currentOperand: '0', operation: '' };
     }
     case ACTIONS.CHOOSE_OPERATION: {
       return { ...state };

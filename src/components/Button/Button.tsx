@@ -3,7 +3,7 @@ import { AppContext } from '../../context/appContext';
 import { ButtonProps } from './Button.types';
 
 export const Button = ({ value, span, type }: ButtonProps) => {
-  const { addDigit } = useContext(AppContext);
+  const { addDigit, chooseOperation, clear } = useContext(AppContext);
 
   const spanValues = {
     1: 'col-span-1',
@@ -11,9 +11,21 @@ export const Button = ({ value, span, type }: ButtonProps) => {
   };
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const { value } = event.currentTarget;
+
     switch (type) {
       case 'digit':
-        addDigit(event.currentTarget.value);
+        addDigit(value);
+        break;
+      case 'operation':
+        switch (value) {
+          case 'AC':
+            clear();
+            break;
+          default:
+            chooseOperation(value);
+            break;
+        }
         break;
     }
   };

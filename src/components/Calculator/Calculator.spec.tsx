@@ -91,4 +91,35 @@ describe('Calculator', () => {
     expect(result).toBeInTheDocument();
     expect(result.innerHTML).toBe('0.');
   });
+
+  it('resets the calculator when AC is pressed', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const one = screen.getByRole('button', { name: '1' });
+    const two = screen.getByRole('button', { name: '2' });
+    const three = screen.getByRole('button', { name: '3' });
+    const AC = screen.getByRole('button', { name: 'AC' });
+
+    let result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+
+    await user.click(one);
+    await user.click(two);
+    await user.click(three);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('123');
+
+    await user.click(AC);
+
+    result = screen.getByTestId('currentOperand');
+    expect(result.innerHTML).toBe('0');
+  });
 });
