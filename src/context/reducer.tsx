@@ -5,8 +5,8 @@ import { ActionType } from './reducer.types';
 const reducer = (state: AppStateType, action: ActionType): AppStateType => {
   switch (action.type) {
     case ACTIONS.ADD_DIGIT: {
-      if (state.currentOperand === '0' && action.payload === '0') {
-        return { ...state };
+      if (state.currentOperand === 'Infinity' && action.payload) {
+        return { ...state, currentOperand: action.payload };
       }
       if (state.currentOperand.includes('.') && action.payload === '.') {
         return { ...state };
