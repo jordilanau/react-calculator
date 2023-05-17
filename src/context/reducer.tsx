@@ -1,4 +1,4 @@
-import { ACTIONS } from './actions';
+import { ACTIONS, OPERATIONS } from './actions';
 import { AppStateType } from './context.types';
 import { ActionType } from './reducer.types';
 
@@ -20,6 +20,9 @@ const reducer = (state: AppStateType, action: ActionType): AppStateType => {
       return { ...state, currentOperand: state.currentOperand + action.payload };
     }
     case ACTIONS.DELETE_DIGIT: {
+      if (state.currentOperand === 'Infinity') {
+        return { ...state, currentOperand: '0' };
+      }
       if (state.currentOperand.length > 1) {
         return { ...state, currentOperand: state.currentOperand.slice(0, -1) };
       }
@@ -70,17 +73,17 @@ function evaluate({
   const current = parseFloat(currentOperand);
 
   switch (operation) {
-    case '+': {
+    case OPERATIONS.PLUS: {
       return (previous + current).toString();
     }
-    case '-': {
+    case OPERATIONS.SUB: {
       return (previous - current).toString();
     }
-    case '*': {
+    case OPERATIONS.MULT: {
       return (previous * current).toString();
     }
-    case '/': {
-      return (previous / current).toString();
+    case OPERATIONS.DIV: {
+      return currentOperand === '0' ? 'Infinity' : (previous / current).toString();
     }
     default: {
       return '';

@@ -406,4 +406,54 @@ describe('Calculator', () => {
     expect(result.innerHTML).toBe('2');
     expect(previous.innerHTML).toBe('');
   });
+
+  it('returns Infinity when dividing by zero', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const two = screen.getByRole('button', { name: '2' });
+    const zero = screen.getByRole('button', { name: '0' });
+    const div = screen.getByRole('button', { name: '/' });
+    const equal = screen.getByRole('button', { name: '=' });
+
+    await user.click(two);
+    await user.click(div);
+    await user.click(zero);
+    await user.click(equal);
+
+    const result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('Infinity');
+  });
+
+  it('DEL makes currentOperand zero when Infinity', async () => {
+    render(
+      <AppProvider>
+        <Calculator />
+      </AppProvider>
+    );
+
+    const user = userEvent.setup();
+
+    const two = screen.getByRole('button', { name: '2' });
+    const zero = screen.getByRole('button', { name: '0' });
+    const div = screen.getByRole('button', { name: '/' });
+    const equal = screen.getByRole('button', { name: '=' });
+    const del = screen.getByRole('button', { name: 'DEL' });
+
+    await user.click(two);
+    await user.click(div);
+    await user.click(zero);
+    await user.click(equal);
+    await user.click(del);
+
+    const result = screen.getByTestId('currentOperand');
+
+    expect(result.innerHTML).toBe('0');
+  });
 });

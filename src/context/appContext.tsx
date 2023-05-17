@@ -1,6 +1,6 @@
-import { PropsWithChildren, createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 import { ACTIONS } from './actions';
-import { AppStateType } from './context.types';
+import { AppProviderTypeProps, AppStateType } from './context.types';
 import reducer from './reducer';
 
 const AppContext = createContext<AppStateType>({
@@ -9,7 +9,7 @@ const AppContext = createContext<AppStateType>({
   operation: '',
 } as AppStateType);
 
-const AppProvider = ({ children }: PropsWithChildren) => {
+const AppProvider = ({ children }: AppProviderTypeProps) => {
   const addDigit = (digit: string) => {
     dispatch({ type: ACTIONS.ADD_DIGIT, payload: digit });
   };
